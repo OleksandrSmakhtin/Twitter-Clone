@@ -24,13 +24,8 @@ class HomeVC: UIViewController {
         addSubviews()
         // apply table delegates
         applyTableDeleagtes()
-        
-
-    }
-    
-    //MARK: - Add Subviews
-    private func addSubviews() {
-        view.addSubview(timeLineTable)
+        // configure nav bar
+        configureNavBar()
     }
     
     //MARK: - viewDidLayoutSubviews
@@ -38,6 +33,34 @@ class HomeVC: UIViewController {
         super.viewDidLayoutSubviews()
         timeLineTable.frame = view.bounds
     }
+    
+    //MARK: - Add Subviews
+    private func addSubviews() {
+        view.addSubview(timeLineTable)
+    }
+    
+    //MARK: - Configure NavBar
+    private func configureNavBar() {
+        let size: CGFloat = 36
+        let logoImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: size, height: size))
+        logoImageView.contentMode = .scaleAspectFill
+        logoImageView.image = UIImage(named: "twitterLogo")
+        
+        let middleView = UIView(frame: CGRect(x: 0, y: 0, width: size, height: size))
+        middleView.addSubview(logoImageView)
+        
+        navigationItem.titleView = middleView
+        
+        let profileImage = UIImage(systemName: "person")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: profileImage, style: .plain, target: self, action: #selector(profileAction))
+    }
+    
+    //MARK: - Nav Bar Actions
+    @objc private func profileAction() {
+        let vc = ProfileVC()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     
 
 }

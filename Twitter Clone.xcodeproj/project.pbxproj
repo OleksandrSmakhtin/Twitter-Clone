@@ -17,6 +17,7 @@
 		44C068F9299E5FAC0046C983 /* NotificationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C068F8299E5FAC0046C983 /* NotificationsVC.swift */; };
 		44C068FB299E5FC50046C983 /* MessagesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C068FA299E5FC50046C983 /* MessagesVC.swift */; };
 		44C068FE299E64F20046C983 /* TweetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C068FD299E64F20046C983 /* TweetCell.swift */; };
+		44C06901299E7F710046C983 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C06900299E7F710046C983 /* ProfileVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		44C068F8299E5FAC0046C983 /* NotificationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsVC.swift; sourceTree = "<group>"; };
 		44C068FA299E5FC50046C983 /* MessagesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesVC.swift; sourceTree = "<group>"; };
 		44C068FD299E64F20046C983 /* TweetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetCell.swift; sourceTree = "<group>"; };
+		44C06900299E7F710046C983 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				44C068F3299E5F450046C983 /* Core */,
+				44C068FF299E7F010046C983 /* General */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -101,6 +104,14 @@
 				44C068FD299E64F20046C983 /* TweetCell.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		44C068FF299E7F010046C983 /* General */ = {
+			isa = PBXGroup;
+			children = (
+				44C06900299E7F710046C983 /* ProfileVC.swift */,
+			);
+			path = General;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -176,6 +187,7 @@
 				44C068DD299E5D9E0046C983 /* AppDelegate.swift in Sources */,
 				44C068F9299E5FAC0046C983 /* NotificationsVC.swift in Sources */,
 				44C068F7299E5F940046C983 /* SearchVC.swift in Sources */,
+				44C06901299E7F710046C983 /* ProfileVC.swift in Sources */,
 				44C068FE299E64F20046C983 /* TweetCell.swift in Sources */,
 				44C068F5299E5F6B0046C983 /* HomeVC.swift in Sources */,
 				44C068DF299E5D9E0046C983 /* SceneDelegate.swift in Sources */,
