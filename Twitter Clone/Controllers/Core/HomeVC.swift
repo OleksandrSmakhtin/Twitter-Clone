@@ -13,7 +13,7 @@ class HomeVC: UIViewController {
     //MARK: - UI Components
     private let timeLineTable: UITableView = {
         let table = UITableView()
-        table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        table.register(TweetCell.self, forCellReuseIdentifier: TweetCell.identifier)
         return table
     }()
 
@@ -59,8 +59,9 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TweetCell.identifier) as? TweetCell else { return UITableViewCell()}
+        
+        return cell
     }
-    
     
 }
