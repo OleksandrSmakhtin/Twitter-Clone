@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MessagesVC.swift
 //  Twitter Clone
 //
 //  Created by Oleksandr Smakhtin on 16.02.2023.
@@ -7,13 +7,13 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class MessagesVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+
     }
+    
 
 
 }
-
