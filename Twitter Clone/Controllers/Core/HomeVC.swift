@@ -46,22 +46,46 @@ class HomeVC: UIViewController {
 //MARK: - UITableViewDelegate & DataSource
 extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     
-    
     private func applyTableDeleagtes() {
         timeLineTable.delegate = self
         timeLineTable.dataSource = self
     }
     
     
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 10
     }
     
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TweetCell.identifier) as? TweetCell else { return UITableViewCell()}
         
+        // apply delegate
+        cell.delegate = self
+        
         return cell
     }
+}
+
+
+
+//MARK: - TweetCellDelegate
+extension HomeVC: TweetCellDelegate {
+    func tweetCellDidTapReply() {
+        print("Reply tapped")
+    }
+    
+    func tweetCellDidTapRetweet() {
+        print("Retweet tapped")
+    }
+    
+    func tweetCellDidTapLike() {
+        print("Like tapped")
+    }
+    
+    func tweetCellDidTapShare() {
+        print("Share tapped")
+    }
+    
     
 }
