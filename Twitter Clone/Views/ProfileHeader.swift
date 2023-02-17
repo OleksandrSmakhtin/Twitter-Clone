@@ -108,7 +108,7 @@ class ProfileHeader: UIView {
             profileHeadeImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             profileHeadeImageView.topAnchor.constraint(equalTo: topAnchor),
             profileHeadeImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            profileHeadeImageView.heightAnchor.constraint(equalToConstant: 180)
+            profileHeadeImageView.heightAnchor.constraint(equalToConstant: 150)
         ]
         
         // avatar image constraints
