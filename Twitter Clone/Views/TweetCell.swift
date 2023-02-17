@@ -26,7 +26,7 @@ class TweetCell: UITableViewCell {
     weak var delegate: TweetCellDelegate?
     
     //MARK: - Action Spacing
-    private let actionSpacing: CGFloat = 60
+    private let actionSpacing: CGFloat = 45
     
     //MARK: - UI Components
     private let avatarImageView: UIImageView = {
