@@ -8,8 +8,92 @@
 import UIKit
 
 class ProfileHeader: UIView {
+    
+    //MARK: - Enum
+    private enum SectionTabs: String {
+        case tweets = "Tweets"
+        case tweetsAndReplies = "Tweets & Replies"
+        case media = "Media"
+        case likes = "Likes"
+        
+        var index: Int {
+            switch self {
+            case .tweets:
+                return 0
+            case .tweetsAndReplies:
+                return 1
+            case .media:
+                return 2
+            case .likes:
+                return 3
+            }
+        }
+        
+    }
+    
+    //MARK: - Vars
+    private var selectedTab = 0 {
+        didSet {
+            print(selectedTab)
+        }
+    }
 
     //MARK: - UI Components
+    private let tabs: [UIButton] = ["Tweets", "Tweets & Replies", "Media", "Likes"].map { btnTitle in
+        let button = UIButton(type: .system)
+        button.setTitle(btnTitle, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
+        button.tintColor = .label
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }
+    
+    // lazy means that all properties will be available when the view is initialized
+    private lazy var sectionStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: tabs)
+        stackView.axis = .horizontal
+        stackView.distribution = .equalSpacing
+        stackView.alignment = .center
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    private let followersTextLbl: UILabel = {
+        let label = UILabel()
+        label.text = "Followers"
+        label.textColor = .secondaryLabel
+        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let followersCountLbl: UILabel = {
+        let label = UILabel()
+        label.text = "45"
+        label.textColor = .label
+        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let followingTextLbl: UILabel = {
+        let label = UILabel()
+        label.text = "Following"
+        label.textColor = .secondaryLabel
+        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let followingCountLbl: UILabel = {
+        let label = UILabel()
+        label.text = "314"
+        label.textColor = .label
+        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     private let displayNameLbl: UILabel = {
         let label = UILabel()
         label.text = "Alex Rame"
@@ -74,6 +158,33 @@ class ProfileHeader: UIView {
         return imageView
     }()
     
+    //MARK: - Configure Stack Btns
+    private func configureStackBtns() {
+        for (i, button) in sectionStack.arrangedSubviews.enumerated() {
+            guard let button = button as? UIButton else { return }
+            
+            button.addTarget(self, action: #selector(didTapTab(_:)), for: .touchUpInside)
+        }
+    }
+    
+    //MARK: - Tabs Actions
+    @objc private func didTapTab(_ sender: UIButton) {
+        guard let label = sender.titleLabel?.text else { return }
+        
+        switch label {
+        case SectionTabs.tweets.rawValue:
+            selectedTab = 0
+        case SectionTabs.tweetsAndReplies.rawValue:
+            selectedTab = 1
+        case SectionTabs.media.rawValue:
+            selectedTab = 2
+        case SectionTabs.likes.rawValue:
+            selectedTab = 3
+        default:
+            selectedTab = 0
+        }
+    }
+    
     //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -82,6 +193,8 @@ class ProfileHeader: UIView {
         addSubviews()
         // apply constraints
         applyConstraints()
+        // configure stack btns
+        configureStackBtns()
         
     }
     
@@ -99,6 +212,11 @@ class ProfileHeader: UIView {
         addSubview(bioLbl)
         addSubview(joinedDateImageView)
         addSubview(joinedDateLbl)
+        addSubview(followingCountLbl)
+        addSubview(followingTextLbl)
+        addSubview(followersCountLbl)
+        addSubview(followersTextLbl)
+        addSubview(sectionStack)
     }
     
     //MARK: - Apply Constraints
@@ -150,6 +268,38 @@ class ProfileHeader: UIView {
             joinedDateLbl.bottomAnchor.constraint(equalTo: joinedDateImageView.bottomAnchor)
         ]
         
+        // following count lbl constraints
+        let followingCountLblConstraints = [
+            followingCountLbl.leadingAnchor.constraint(equalTo: displayNameLbl.leadingAnchor),
+            followingCountLbl.topAnchor.constraint(equalTo: joinedDateLbl.bottomAnchor, constant: 10)
+        ]
+        
+        // following text lbl constraints
+        let followingTextLblConstraints = [
+            followingTextLbl.leadingAnchor.constraint(equalTo: followingCountLbl.trailingAnchor, constant: 4),
+            followingTextLbl.bottomAnchor.constraint(equalTo: followingCountLbl.bottomAnchor)
+        ]
+        
+        // followers count lbl constraints
+        let followersCountLblConstraints = [
+            followersCountLbl.leadingAnchor.constraint(equalTo: followingTextLbl.trailingAnchor, constant: 8),
+            followersCountLbl.bottomAnchor.constraint(equalTo: followingCountLbl.bottomAnchor)
+        ]
+        
+        //followers text lbl constraints
+        let followersTextLblConstraints = [
+            followersTextLbl.leadingAnchor.constraint(equalTo: followersCountLbl.trailingAnchor, constant: 4),
+            followersTextLbl.bottomAnchor.constraint(equalTo: followingCountLbl.bottomAnchor)
+        ]
+        
+        // section stack constraints
+        let sectionStackConstraints = [
+            sectionStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            sectionStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            sectionStack.topAnchor.constraint(equalTo: followingCountLbl.bottomAnchor, constant: 5),
+            sectionStack.heightAnchor.constraint(equalToConstant: 35)
+        ]
+        
         NSLayoutConstraint.activate(profileHeaderImageViewConstraints)
         NSLayoutConstraint.activate(avatarImageViewConstraints)
         NSLayoutConstraint.activate(displayNameLblConstraints)
@@ -157,6 +307,11 @@ class ProfileHeader: UIView {
         NSLayoutConstraint.activate(bioLblConstraints)
         NSLayoutConstraint.activate(joinedDateImageViewConstraints)
         NSLayoutConstraint.activate(joinedDateLblConstraints)
+        NSLayoutConstraint.activate(followingCountLblConstraints)
+        NSLayoutConstraint.activate(followingTextLblConstraints)
+        NSLayoutConstraint.activate(followersCountLblConstraints)
+        NSLayoutConstraint.activate(followersTextLblConstraints)
+        NSLayoutConstraint.activate(sectionStackConstraints)
         
     }
 
