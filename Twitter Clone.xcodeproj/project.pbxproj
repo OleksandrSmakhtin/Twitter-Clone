@@ -20,6 +20,7 @@
 		4416DE9429F818EF00C2DCAD /* OnboardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4416DE9329F818EF00C2DCAD /* OnboardingVC.swift */; };
 		4416DE9629F8203300C2DCAD /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4416DE9529F8203300C2DCAD /* RegisterVC.swift */; };
 		4416DEA129F82C0500C2DCAD /* RegisterViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4416DEA029F82C0500C2DCAD /* RegisterViewViewModel.swift */; };
+		4416DEA429F838B600C2DCAD /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4416DEA329F838B600C2DCAD /* AuthManager.swift */; };
 		44C068DD299E5D9E0046C983 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C068DC299E5D9E0046C983 /* AppDelegate.swift */; };
 		44C068DF299E5D9E0046C983 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C068DE299E5D9E0046C983 /* SceneDelegate.swift */; };
 		44C068E6299E5D9F0046C983 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44C068E5299E5D9F0046C983 /* Assets.xcassets */; };
@@ -39,6 +40,7 @@
 		4416DE9329F818EF00C2DCAD /* OnboardingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingVC.swift; sourceTree = "<group>"; };
 		4416DE9529F8203300C2DCAD /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
 		4416DEA029F82C0500C2DCAD /* RegisterViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewViewModel.swift; sourceTree = "<group>"; };
+		4416DEA329F838B600C2DCAD /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		44C068D9299E5D9E0046C983 /* Twitter Clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Twitter Clone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		44C068DC299E5D9E0046C983 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		44C068DE299E5D9E0046C983 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -92,6 +94,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		4416DEA229F8389800C2DCAD /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				4416DEA329F838B600C2DCAD /* AuthManager.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
 		44C068D0299E5D9E0046C983 = {
 			isa = PBXGroup;
 			children = (
@@ -111,6 +121,7 @@
 		44C068DB299E5D9E0046C983 /* Twitter Clone */ = {
 			isa = PBXGroup;
 			children = (
+				4416DEA229F8389800C2DCAD /* Networking */,
 				4416DE9729F82B7800C2DCAD /* Models */,
 				44C068FC299E64D30046C983 /* Views */,
 				44C068F2299E5F3C0046C983 /* Controllers */,
@@ -249,6 +260,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				44C068DD299E5D9E0046C983 /* AppDelegate.swift in Sources */,
+				4416DEA429F838B600C2DCAD /* AuthManager.swift in Sources */,
 				44C068F9299E5FAC0046C983 /* NotificationsVC.swift in Sources */,
 				44C068F7299E5F940046C983 /* SearchVC.swift in Sources */,
 				44C06901299E7F710046C983 /* ProfileVC.swift in Sources */,
