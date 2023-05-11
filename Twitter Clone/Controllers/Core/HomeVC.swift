@@ -34,16 +34,7 @@ class HomeVC: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
         
-        
-        // handle firebas auth
-        if Auth.auth().currentUser == nil {
-            let vc = UINavigationController(rootViewController: OnboardingVC())
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: false)
-        }
-        
-        
-        
+        handleAuth()
         
     }
     
@@ -56,6 +47,16 @@ class HomeVC: UIViewController {
     //MARK: - Add Subviews
     private func addSubviews() {
         view.addSubview(timeLineTable)
+    }
+    
+    //MARK: - Handle auth
+    private func handleAuth() {
+        // handle firebas auth
+        if Auth.auth().currentUser == nil {
+            let vc = UINavigationController(rootViewController: OnboardingVC())
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: false)
+        }
     }
     
     //MARK: - Configure NavBar
@@ -72,9 +73,17 @@ class HomeVC: UIViewController {
         
         let profileImage = UIImage(systemName: "person")
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: profileImage, style: .plain, target: self, action: #selector(profileAction))
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "rectangle.portrait.and.arrow.forward"), style: .plain, target: self, action: #selector(signOutAction))
     }
     
     //MARK: - Nav Bar Actions
+    @objc private func signOutAction() {
+        // firebase sign out
+        try? Auth.auth().signOut()
+        handleAuth()
+    }
+    
     @objc private func profileAction() {
         let vc = ProfileVC()
         navigationController?.pushViewController(vc, animated: true)

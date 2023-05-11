@@ -48,6 +48,7 @@ class OnboardingVC: UIViewController {
         btn.setTitle("Login", for: .normal)
         btn.titleLabel?.font = .systemFont(ofSize: 14)
         btn.setTitleColor(UIColor(red: 29/255, green: 161/255, blue: 242/255, alpha: 1), for: .normal)
+        btn.addTarget(self, action: #selector(didTapLoginAccount), for: .touchUpInside)
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
     }()
@@ -55,6 +56,11 @@ class OnboardingVC: UIViewController {
     //MARK: - Actions
     @objc private func didTapCreateAccount() {
         let vc = RegisterVC()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc private func didTapLoginAccount() {
+        let vc = LoginVC()
         navigationController?.pushViewController(vc, animated: true)
     }
     

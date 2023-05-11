@@ -12,26 +12,26 @@ import Combine
 
 
                                    // make a class observable
-final class RegisterViewViewModel: ObservableObject {
+final class AuthViewViewModel: ObservableObject {
     
     @Published var email: String?
     @Published var password: String?
-    @Published var isRegistrationFormValid: Bool = false
+    @Published var isAuthFormValid: Bool = false
     @Published var user: User?
     
     
-    // canceble to store
+    // cancellable to store
     private var subscriptions: Set<AnyCancellable> = []
     
     
     //MARK: - validation
-    func validateRegistrationForm() {
+    func validateAuthForm() {
         guard let email = email, let password = password else
         {
-            isRegistrationFormValid = false
+            isAuthFormValid = false
             return
         }
-        isRegistrationFormValid = isValidEmail(email) && password.count >= 8
+        isAuthFormValid = isValidEmail(email) && password.count >= 8
     }
     
     //MARK: - Email validation

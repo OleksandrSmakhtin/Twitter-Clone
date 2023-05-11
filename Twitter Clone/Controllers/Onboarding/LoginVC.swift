@@ -1,25 +1,23 @@
 //
-//  RegisterVC.swift
+//  LoginVC.swift
 //  Twitter Clone
 //
-//  Created by Oleksandr Smakhtin on 25.04.2023.
+//  Created by Oleksandr Smakhtin on 11.05.2023.
 //
 
 import UIKit
 import Combine
 
-class RegisterVC: UIViewController {
-    
-    
+class LoginVC: UIViewController {
+
     //MARK: - Set view model
     private var viewModel = AuthViewViewModel()
     private var subscriptions: Set<AnyCancellable> = []
     
-
     //MARK: - UI Objects
-    private let registerTitleLbl: UILabel = {
+    private let loginTitleLbl: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Create your account"
+        lbl.text = "Login to your account"
         lbl.font = .systemFont(ofSize: 32, weight: .bold)
         lbl.textColor = .label
         lbl.translatesAutoresizingMaskIntoConstraints = false
@@ -49,15 +47,15 @@ class RegisterVC: UIViewController {
         return textField
     }()
     
-    private let registerBtn: UIButton = {
+    private let loginBtn: UIButton = {
         let btn = UIButton(type: .system)
-        btn.setTitle("Create account", for: .normal)
+        btn.setTitle("Login", for: .normal)
         btn.tintColor = .white
         btn.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
         btn.backgroundColor = UIColor(red: 29/255, green: 161/255, blue: 242/255, alpha: 1)
         btn.layer.masksToBounds = true
         btn.layer.cornerRadius = 25
-        btn.addTarget(self, action: #selector(didTapRegister), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(didTapLogin), for: .touchUpInside)
         btn.translatesAutoresizingMaskIntoConstraints = false
         
         btn.isEnabled = false
@@ -76,16 +74,15 @@ class RegisterVC: UIViewController {
         // apply constraints
         applyConstraints()
         // bind views
-        bindViews()
+        bindViews() 
+        
     }
-    
-    
     
     //MARK: - Bind views
     private func bindViews() {
         // bind validation
         viewModel.$isAuthFormValid.sink { [weak self] validationState in
-            self?.registerBtn.isEnabled = validationState
+            self?.loginBtn.isEnabled = validationState
         }.store(in: &subscriptions)
         
         
@@ -98,7 +95,7 @@ class RegisterVC: UIViewController {
             
         }.store(in: &subscriptions)
         
-    }
+    } 
     
     //MARK: - Actions
     @objc private func didChangeEmail() {
@@ -109,35 +106,34 @@ class RegisterVC: UIViewController {
         viewModel.password = passwordTextField.text
         viewModel.validateAuthForm()
     }
-    @objc private func didTapRegister() {
-        viewModel.createUser()
+    @objc private func didTapLogin() {
+        
     }
     @objc private func didTapToDissmiss() {
         view.endEditing(true)
     }
-    
 
     //MARK: - Add subviews
     private func addSubviews() {
-        view.addSubview(registerTitleLbl)
+        view.addSubview(loginTitleLbl)
         view.addSubview(emailTextField)
         view.addSubview(passwordTextField)
-        view.addSubview(registerBtn)
+        view.addSubview(loginBtn)
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapToDissmiss)))
     }
     
     //MARK: - Apply constraints
     private func applyConstraints() {
-        // registerTitleLbl constraints
-        let registerTitleLblConstraints = [
-            registerTitleLbl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            registerTitleLbl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+        // loginTitleLbl constraints
+        let loginTitleLblConstraints = [
+            loginTitleLbl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loginTitleLbl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
         ]
         
         // emailTextField constraints
         let emailTextFieldConstraints = [
             emailTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            emailTextField.topAnchor.constraint(equalTo: registerTitleLbl.bottomAnchor, constant: 20),
+            emailTextField.topAnchor.constraint(equalTo: loginTitleLbl.bottomAnchor, constant: 20),
             emailTextField.widthAnchor.constraint(equalToConstant: view.frame.width - 40),
             emailTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             emailTextField.heightAnchor.constraint(equalToConstant: 60)
@@ -152,19 +148,19 @@ class RegisterVC: UIViewController {
             passwordTextField.heightAnchor.constraint(equalToConstant: 60)
         ]
         
-        // registerBtn constraints
-        let registerBtnConstraints = [
-            registerBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            registerBtn.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 20),
-            registerBtn.widthAnchor.constraint(equalToConstant: 180),
-            registerBtn.heightAnchor.constraint(equalToConstant: 50)
+        // loginBtn constraints
+        let loginBtnConstraints = [
+            loginBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            loginBtn.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 20),
+            loginBtn.widthAnchor.constraint(equalToConstant: 180),
+            loginBtn.heightAnchor.constraint(equalToConstant: 50)
         ]
         
         // activate constraints
-        NSLayoutConstraint.activate(registerTitleLblConstraints)
+        NSLayoutConstraint.activate(loginTitleLblConstraints)
         NSLayoutConstraint.activate(emailTextFieldConstraints)
         NSLayoutConstraint.activate(passwordTextFieldConstraints)
-        NSLayoutConstraint.activate(registerBtnConstraints)
+        NSLayoutConstraint.activate(loginBtnConstraints)
         
     }
 
