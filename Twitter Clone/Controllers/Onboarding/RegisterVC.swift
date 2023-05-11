@@ -80,6 +80,7 @@ class RegisterVC: UIViewController {
     }
     
     
+    
     //MARK: - Bind views
     private func bindViews() {
         // bind validation
