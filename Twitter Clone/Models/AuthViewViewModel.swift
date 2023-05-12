@@ -18,6 +18,7 @@ final class AuthViewViewModel: ObservableObject {
     @Published var password: String?
     @Published var isAuthFormValid: Bool = false
     @Published var user: User?
+    @Published var error: String?
     
     
     // cancellable to store
@@ -45,12 +46,28 @@ final class AuthViewViewModel: ObservableObject {
     //MARK: - Create user
     func createUser() {
         guard let email = email, let password = password else { return }
-        AuthManager.shared.registerUser(with: email, password: password).sink { _ in
+        AuthManager.shared.registerUser(with: email, password: password).sink { [weak self] completion in
+            // handle errors
+            if case .failure(let error) = completion {
+                self?.error = error.localizedDescription
+            }
             
         } receiveValue: { [weak self] user in
             self?.user = user
         }.store(in: &subscriptions )
-
+    }
+    
+    //MARK: - Login user
+    func loginUser() {
+        guard let email = email, let password = password else { return }
+        AuthManager.shared.loginUser(with: email, password: password).sink { [weak self] completion in
+            // handle errors
+            if case .failure(let error) = completion {
+                self?.error = error.localizedDescription
+            }
+        } receiveValue: { [weak self] user in
+            self?.user = user
+        }.store(in: &subscriptions )
     }
     
     

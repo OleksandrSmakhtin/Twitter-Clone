@@ -91,14 +91,30 @@ class RegisterVC: UIViewController {
         
         // bind registration
         viewModel.$user.sink { [weak self] user in
-            
             guard user != nil else { return }
             guard let vc = self?.navigationController?.viewControllers.first as? OnboardingVC else { return }
             vc.dismiss(animated: true)
             
         }.store(in: &subscriptions)
         
+        
+        // bind errors
+        viewModel.$error.sink { [weak self] errorMessage in
+            guard let error = errorMessage else { return }
+            self?.presentAlert(with: error)
+            
+        }.store(in: &subscriptions)
     }
+    
+    
+    //MARK: - Registration error alert
+    private func presentAlert(with error: String) {
+        let alert = UIAlertController(title: "Something went wrong", message: error, preferredStyle: .alert)
+        let errorAction = UIAlertAction(title: "OK", style: .destructive)
+        alert.addAction(errorAction)
+        present(alert, animated: true)
+    }
+    
     
     //MARK: - Actions
     @objc private func didChangeEmail() {

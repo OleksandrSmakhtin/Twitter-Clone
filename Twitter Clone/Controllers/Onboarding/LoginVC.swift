@@ -95,7 +95,22 @@ class LoginVC: UIViewController {
             
         }.store(in: &subscriptions)
         
-    } 
+        // bind errors
+        viewModel.$error.sink { [weak self] errorMessage in
+            guard let error = errorMessage else { return }
+            self?.presentAlert(with: error)
+            
+        }.store(in: &subscriptions)
+        
+    }
+    
+    //MARK: - Registration error alert
+    private func presentAlert(with error: String) {
+        let alert = UIAlertController(title: "Something went wrong", message: error, preferredStyle: .alert)
+        let errorAction = UIAlertAction(title: "OK", style: .destructive)
+        alert.addAction(errorAction)
+        present(alert, animated: true)
+    }
     
     //MARK: - Actions
     @objc private func didChangeEmail() {
@@ -107,7 +122,7 @@ class LoginVC: UIViewController {
         viewModel.validateAuthForm()
     }
     @objc private func didTapLogin() {
-        
+        viewModel.loginUser()
     }
     @objc private func didTapToDissmiss() {
         view.endEditing(true)
