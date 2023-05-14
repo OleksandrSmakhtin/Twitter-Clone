@@ -6,10 +6,15 @@
 //
 
 import UIKit
+import Combine
 import FirebaseAuth
 
 class HomeVC: UIViewController {
     
+    
+    //MARK: - ViewModel
+    private var viewModel = HomeViewViewModel()
+    private var subscriptions: Set<AnyCancellable> = []
     
     //MARK: - UI Components
     private let timeLineTable: UITableView = {
@@ -27,16 +32,37 @@ class HomeVC: UIViewController {
         applyTableDeleagtes()
         // configure nav bar
         configureNavBar()
+        // bind views
+        bindViews()
     }
     
     //MARK: - viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
-        
+        // handle auth
         handleAuth()
-        
+        // get user
+        viewModel.retreiveUser()
     }
+    
+    //MARK: - Bind views
+    private func bindViews() {
+        viewModel.$user.sink { [weak self] user in
+            guard let user = user else { return }
+            if !user.isUserOnboarded {
+                self?.completeUserOnboarding()
+            }
+        }.store(in: &subscriptions)
+    }
+    
+    //MARK: - Complete user onborading
+    private func completeUserOnboarding() {
+        let vc = ProfileDataFormVC()
+        present(vc, animated: true)
+    }
+    
+    
     
     //MARK: - viewDidLayoutSubviews
     override func viewDidLayoutSubviews() {

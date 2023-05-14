@@ -31,4 +31,10 @@ class DatabaseManager {
         }.eraseToAnyPublisher()
     }
     
+    // retreive user
+    func collectionUsers(retreive id: String) -> AnyPublisher<TwitterUser, Error> {
+                                                                      // decode data
+        db.collection(usersPath).document(id).getDocument().tryMap { try  $0.data(as: TwitterUser.self)}.eraseToAnyPublisher()
+    }
+    
 }

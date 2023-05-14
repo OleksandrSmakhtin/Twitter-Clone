@@ -65,13 +65,13 @@ final class AuthViewViewModel: ObservableObject {
     
     //MARK: - Create user record
     private func createUserRecord(for user: User) {
-        DatabaseManager.shared.collectionUsers(add: user).sink { comletion in
+        DatabaseManager.shared.collectionUsers(add: user).sink { [weak self] comletion in
             if case .failure(let error) = comletion {
-                self.error = error
+                self?.error = error.localizedDescription
             }
-        } receiveValue: { <#Bool#> in
-            <#code#>
-        }
+        } receiveValue: { state in
+            print("Adding user record to db: \(state)")
+        }.store(in: &subscriptions)
 
     }
     
