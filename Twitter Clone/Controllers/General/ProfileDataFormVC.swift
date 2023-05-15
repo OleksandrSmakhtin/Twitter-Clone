@@ -6,9 +6,14 @@
 //
 
 import UIKit
+import Combine
 import PhotosUI
 
 class ProfileDataFormVC: UIViewController {
+    
+    //MARK: - viewModel
+    private var viewModel = ProfileDataFormViewViewModel()
+    private var subscriptions: Set<AnyCancellable> = []
 
     //MARK: - UI Objects
     private let scrollView: UIScrollView = {
@@ -51,6 +56,7 @@ class ProfileDataFormVC: UIViewController {
         textField.layer.masksToBounds = true
         textField.layer.cornerRadius = 8
         textField.attributedPlaceholder = NSAttributedString(string: "Display Name", attributes: [NSAttributedString.Key.foregroundColor : UIColor.gray])
+        textField.addTarget(self, action: #selector(didChangeDislayName), for: .editingChanged)
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -64,6 +70,7 @@ class ProfileDataFormVC: UIViewController {
         textField.layer.masksToBounds = true
         textField.layer.cornerRadius = 8
         textField.attributedPlaceholder = NSAttributedString(string: "Username", attributes: [NSAttributedString.Key.foregroundColor : UIColor.gray])
+        textField.addTarget(self, action: #selector(didChangeUsername), for: .editingChanged)
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -90,7 +97,7 @@ class ProfileDataFormVC: UIViewController {
         btn.backgroundColor = UIColor(red: 29/255, green: 161/255, blue: 242/255, alpha: 1)
         btn.layer.masksToBounds = true
         btn.layer.cornerRadius = 25
-        //btn.addTarget(self, action: #selector(didTapRegister), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(didTapSubmit), for: .touchUpInside)
         btn.translatesAutoresizingMaskIntoConstraints = false
         
         btn.isEnabled = false
@@ -115,9 +122,36 @@ class ProfileDataFormVC: UIViewController {
         applyTextFieldDelegates()
         // add gesture for avatar
         avatarPlaceHolderView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapAvatar)))
+        // bind views
+        bindViews()
     }
     
+    
+    //MARK: - bind views
+    private func bindViews() {
+        viewModel.$isFormValid.sink { [weak self] state in
+            self?.submitBtn.isEnabled = state
+        }.store(in: &subscriptions)
+    }
+    
+    
+    
     //MARK: - Actions
+    @objc private func didTapSubmit() {
+        viewModel.uploadAvatar()
+        print(viewModel.url)
+    }
+    
+    @objc private func didChangeDislayName() {
+        viewModel.displayName = displayNameTextField.text
+        viewModel.validateUserProfileForm()
+    }
+    
+    @objc private func didChangeUsername() {
+        viewModel.username = usernameTextField.text
+        viewModel.validateUserProfileForm()
+    }
+    
     @objc private func dissmissAction() {
         view.endEditing(true)
     }
@@ -237,6 +271,12 @@ extension ProfileDataFormVC: UITextViewDelegate {
             textView.textColor = .gray
         }
     }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        viewModel.bio = textView.text
+        viewModel.validateUserProfileForm()
+    }
+    
 }
 
 
@@ -266,6 +306,7 @@ extension ProfileDataFormVC: PHPickerViewControllerDelegate {
                 if let image = object as? UIImage {
                     DispatchQueue.main.async {
                         self?.avatarPlaceHolderView.image = image
+                        self?.viewModel.imageData = image
                     }
                 }
             }
