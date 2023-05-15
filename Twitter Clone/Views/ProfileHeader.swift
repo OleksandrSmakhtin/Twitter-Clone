@@ -87,9 +87,8 @@ class ProfileHeader: UIView {
         return label
     }()
     
-    private let followersCountLbl: UILabel = {
+    var followersCountLbl: UILabel = {
         let label = UILabel()
-        label.text = "45"
         label.textColor = .label
         label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -105,43 +104,39 @@ class ProfileHeader: UIView {
         return label
     }()
     
-    private let followingCountLbl: UILabel = {
+    var followingCountLbl: UILabel = {
         let label = UILabel()
-        label.text = "314"
         label.textColor = .label
         label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private let displayNameLbl: UILabel = {
+    var displayNameLbl: UILabel = {
         let label = UILabel()
-        label.text = "Alex Rame"
         label.textColor = .label
         label.font = UIFont.systemFont(ofSize: 22, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private let usernameLbl: UILabel = {
+    var usernameLbl: UILabel = {
         let label = UILabel()
-        label.text = "@owslyashaa"
         label.font = UIFont.systemFont(ofSize: 18, weight: .regular)
         label.textColor = .secondaryLabel
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private let bioLbl: UILabel = {
+    var bioLbl: UILabel = {
         let label = UILabel()
-        label.text = "I'm a young begginer IOS developer."
         label.numberOfLines = 3
         label.textColor = .label
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private let joinedDateLbl: UILabel = {
+    var joinedDateLbl: UILabel = {
         let label = UILabel()
         label.text = "Joined: May 2021"
         label.textColor = .secondaryLabel
@@ -158,13 +153,11 @@ class ProfileHeader: UIView {
         return imageView
     }()
     
-    private let avatarImageView: UIImageView = {
+    var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 40
-        imageView.image = UIImage(systemName: "person")
-        imageView.backgroundColor = .yellow
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()

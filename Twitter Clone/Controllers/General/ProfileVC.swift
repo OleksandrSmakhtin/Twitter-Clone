@@ -6,13 +6,20 @@
 //
 
 import UIKit
+import Combine
+import SDWebImage
 
 class ProfileVC: UIViewController {
     
+    //MARK: - viewModel
+    private var viewModel = ProfileViewViewModel()
+    private var subscriptions: Set<AnyCancellable> = []
     
     //MARK: - Status bar settings
     private var isStatusBarHidden = true
     
+    
+    //MARK: - UI Components
     private let statusBar: UIView = {
         let view = UIView()
         view.backgroundColor = .systemBackground
@@ -21,14 +28,14 @@ class ProfileVC: UIViewController {
         return view
     }()
     
-    
-    //MARK: - UI Components
     private let profileTable: UITableView = {
         let table = UITableView()
         table.register(TweetCell.self, forCellReuseIdentifier: TweetCell.identifier)
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
+    
+    private lazy var headerView = ProfileHeader(frame: CGRect(x: 0, y: 0, width: profileTable.frame.width, height: 380))
     
     
     //MARK: - viewDidLoad
@@ -47,11 +54,35 @@ class ProfileVC: UIViewController {
         applyConstraints()
         // apply table delegates
         applyTableDelegates()
+        // bind views
+        bindViews()
+    }
+    
+    
+    //MARK: - viewDidAppear
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.retreiveUser()
+    }
+    
+    //MARK: - Bind views
+    private func bindViews() {
+        viewModel.$user.sink { [weak self] user in
+            
+            guard let user = user else { return }
+            self?.headerView.displayNameLbl.text = user.displayName
+            self?.headerView.usernameLbl.text = "@\(user.username)"
+            self?.headerView.bioLbl.text = user.bio
+            self?.headerView.followersCountLbl.text = "\(user.followersCount)"
+            self?.headerView.followingCountLbl.text = "\(user.followingCount)"
+            self?.headerView.avatarImageView.sd_setImage(with: URL(string: user.avatarPath))
+            
+            
+        }.store(in: &subscriptions)
     }
     
     //MARK: - configure profile Table
     private func configureTable() {
-        let headerView = ProfileHeader(frame: CGRect(x: 0, y: 0, width: profileTable.frame.width, height: 380))
         profileTable.tableHeaderView = headerView
         
         // ignore the safe area for the table

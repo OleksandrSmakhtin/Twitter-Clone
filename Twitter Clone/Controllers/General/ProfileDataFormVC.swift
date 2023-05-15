@@ -132,6 +132,14 @@ class ProfileDataFormVC: UIViewController {
         viewModel.$isFormValid.sink { [weak self] state in
             self?.submitBtn.isEnabled = state
         }.store(in: &subscriptions)
+        
+        
+        viewModel.$isOnboardedFinished.sink { [weak self] state in
+            if state {
+                self?.dismiss(animated: true)
+            }
+        }.store(in: &subscriptions)
+        
     }
     
     
@@ -139,7 +147,6 @@ class ProfileDataFormVC: UIViewController {
     //MARK: - Actions
     @objc private func didTapSubmit() {
         viewModel.uploadAvatar()
-        print(viewModel.url)
     }
     
     @objc private func didChangeDislayName() {

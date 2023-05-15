@@ -10,6 +10,7 @@ import Combine
 import UIKit
 import FirebaseStorage
 import FirebaseStorageCombineSwift
+import FirebaseAuth
 
 
 final class ProfileDataFormViewViewModel: ObservableObject {
@@ -21,7 +22,7 @@ final class ProfileDataFormViewViewModel: ObservableObject {
     @Published var imageData: UIImage?
     @Published var isFormValid: Bool = false
     @Published var error: String = ""
-    @Published var url: URL?
+    @Published var isOnboardedFinished: Bool = false
     
     private var subscriptions: Set<AnyCancellable> = []
     
@@ -37,6 +38,8 @@ final class ProfileDataFormViewViewModel: ObservableObject {
         isFormValid = true
     }
     
+    
+    // upload avatar
     func uploadAvatar() {
         
         let randomId = UUID().uuidString
@@ -49,13 +52,49 @@ final class ProfileDataFormViewViewModel: ObservableObject {
                 StorageManager.shared.getDownloadURL(for: metaData.path)
         })
             .sink { [weak self] completion in
-            if case .failure(let error) = completion {
-                self?.error = error.localizedDescription
-            }
+            
+                switch completion {
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    self?.error = error.localizedDescription
+                case .finished:
+                    print("Succsessfully upload data")
+                    self?.updateUserData()
+                }
+                
+                
         } receiveValue: { [weak self] url in
-            self?.url = url
+            self?.avatarPath = url.absoluteString
         }.store(in: &subscriptions)
 
+    }
+    
+    
+    private func updateUserData() {
+        guard let displayName,
+              let username,
+              let bio,
+              let avatarPath,
+              let id = Auth.auth().currentUser?.uid else { return }
+        
+        let updatedFields: [String : Any] = [
+            "displayName" : displayName,
+            "username" : username,
+            "bio" : bio,
+            "avatarPath" : avatarPath,
+            "isUserOnboarded": true
+        ]
+        
+        DatabaseManager.shared.colletionUsers(updateFields: updatedFields, for: id ).sink { [weak self] completion in
+            if case .failure(let error) = completion {
+                print(error.localizedDescription)
+                self?.error = error.localizedDescription
+            }
+        } receiveValue: { [weak self] updated in
+            self?.isOnboardedFinished = updated
+        }.store(in: &subscriptions)
+
+        
     }
     
     
