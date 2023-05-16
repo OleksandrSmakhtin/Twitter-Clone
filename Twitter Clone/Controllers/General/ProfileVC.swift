@@ -77,7 +77,6 @@ class ProfileVC: UIViewController {
             self?.headerView.followingCountLbl.text = "\(user.followingCount)"
             self?.headerView.avatarImageView.sd_setImage(with: URL(string: user.avatarPath))
             
-            
         }.store(in: &subscriptions)
     }
     
