@@ -68,7 +68,6 @@ class ProfileVC: UIViewController {
     //MARK: - Bind views
     private func bindViews() {
         viewModel.$user.sink { [weak self] user in
-            
             guard let user = user else { return }
             self?.headerView.displayNameLbl.text = user.displayName
             self?.headerView.usernameLbl.text = "@\(user.username)"
