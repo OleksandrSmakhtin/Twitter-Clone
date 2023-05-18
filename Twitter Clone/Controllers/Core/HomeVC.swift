@@ -123,9 +123,6 @@ class HomeVC: UIViewController {
         let vc = ProfileVC()
         navigationController?.pushViewController(vc, animated: true)
     }
-    
-    
-
 }
 
 
