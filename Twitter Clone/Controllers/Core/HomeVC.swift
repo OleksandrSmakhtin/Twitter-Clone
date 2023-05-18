@@ -17,6 +17,15 @@ class HomeVC: UIViewController {
     private var subscriptions: Set<AnyCancellable> = []
     
     //MARK: - UI Components
+    private let composeTweetBtn: UIButton = {
+        let btn = UIButton(type: .system, primaryAction: UIAction { _ in print("Tweet")})
+        btn.backgroundColor = .twitterBlueColor
+        btn.tintColor = .label
+        btn.setImage(UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 18, weight: .bold)), for: .normal)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }()
+    
     private let timeLineTable: UITableView = {
         let table = UITableView()
         table.register(TweetCell.self, forCellReuseIdentifier: TweetCell.identifier)

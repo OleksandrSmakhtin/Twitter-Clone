@@ -20,6 +20,7 @@ class ProfileVC: UIViewController {
     
     
     //MARK: - UI Components
+    
     private let statusBar: UIView = {
         let view = UIView()
         view.backgroundColor = .systemBackground
@@ -75,6 +76,7 @@ class ProfileVC: UIViewController {
             self?.headerView.followersCountLbl.text = "\(user.followersCount)"
             self?.headerView.followingCountLbl.text = "\(user.followingCount)"
             self?.headerView.avatarImageView.sd_setImage(with: URL(string: user.avatarPath))
+            self?.headerView.joinedDateLbl.text = self?.viewModel.getFormattedData(with: user.createdOn)
             
         }.store(in: &subscriptions)
     }
