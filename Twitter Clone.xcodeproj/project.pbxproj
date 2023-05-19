@@ -44,6 +44,8 @@
 		44C06901299E7F710046C983 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C06900299E7F710046C983 /* ProfileVC.swift */; };
 		44C06903299EA31D0046C983 /* ProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C06902299EA31D0046C983 /* ProfileHeader.swift */; };
 		44DBF4822A1792A000A71EE6 /* TweetComposeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DBF4812A1792A000A71EE6 /* TweetComposeVC.swift */; };
+		44DBF4842A18182200A71EE6 /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DBF4832A18182200A71EE6 /* Tweet.swift */; };
+		44DBF4862A1818CC00A71EE6 /* TweetComposeViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DBF4852A1818CC00A71EE6 /* TweetComposeViewViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,6 +78,8 @@
 		44C06900299E7F710046C983 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		44C06902299EA31D0046C983 /* ProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeader.swift; sourceTree = "<group>"; };
 		44DBF4812A1792A000A71EE6 /* TweetComposeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetComposeVC.swift; sourceTree = "<group>"; };
+		44DBF4832A18182200A71EE6 /* Tweet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
+		44DBF4852A1818CC00A71EE6 /* TweetComposeViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetComposeViewViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +120,7 @@
 				4475E41B2A1037D30080029F /* HomeViewViewModel.swift */,
 				4475E41F2A1149E80080029F /* ProfileDataFormViewViewModel.swift */,
 				4475E4232A1278450080029F /* ProfileViewViewModel.swift */,
+				44DBF4852A1818CC00A71EE6 /* TweetComposeViewViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -134,6 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				4475E4172A101C550080029F /* TwitterUser.swift */,
+				44DBF4832A18182200A71EE6 /* Tweet.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -328,8 +334,10 @@
 				44C06903299EA31D0046C983 /* ProfileHeader.swift in Sources */,
 				4475E41A2A101D7C0080029F /* DatabaseManager.swift in Sources */,
 				44C068FE299E64F20046C983 /* TweetCell.swift in Sources */,
+				44DBF4842A18182200A71EE6 /* Tweet.swift in Sources */,
 				4416DE9429F818EF00C2DCAD /* OnboardingVC.swift in Sources */,
 				4416DEA129F82C0500C2DCAD /* AuthViewViewModel.swift in Sources */,
+				44DBF4862A1818CC00A71EE6 /* TweetComposeViewViewModel.swift in Sources */,
 				4475E4202A1149E80080029F /* ProfileDataFormViewViewModel.swift in Sources */,
 				4475E42B2A1680370080029F /* Extension+UIColor.swift in Sources */,
 				44C068F5299E5F6B0046C983 /* HomeVC.swift in Sources */,
