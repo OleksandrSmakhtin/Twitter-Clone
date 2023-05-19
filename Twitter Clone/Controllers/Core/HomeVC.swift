@@ -17,11 +17,13 @@ class HomeVC: UIViewController {
     private var subscriptions: Set<AnyCancellable> = []
     
     //MARK: - UI Components
-    private let composeTweetBtn: UIButton = {
-        let btn = UIButton(type: .system, primaryAction: UIAction { _ in print("Tweet")})
+    private lazy var composeTweetBtn: UIButton = {
+        let btn = UIButton(type: .system, primaryAction: UIAction { [weak self] _ in self?.didTapTweet()})
         btn.backgroundColor = .twitterBlueColor
-        btn.tintColor = .label
+        btn.tintColor = .white
         btn.setImage(UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 18, weight: .bold)), for: .normal)
+        btn.layer.cornerRadius = 30
+        btn.clipsToBounds = true
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
     }()
@@ -37,6 +39,8 @@ class HomeVC: UIViewController {
         super.viewDidLoad()
         // adding subviews
         addSubviews()
+        // apply constraints
+        applyConstraints()
         // apply table delegates
         applyTableDeleagtes()
         // configure nav bar
@@ -82,7 +86,24 @@ class HomeVC: UIViewController {
     //MARK: - Add Subviews
     private func addSubviews() {
         view.addSubview(timeLineTable)
+        view.addSubview(composeTweetBtn)
     }
+    
+    
+    //MARK: - Apply constraints
+    private func applyConstraints() {
+        // composeTweetBtn Constraints
+        let composeTweetBtnConstraints = [
+            composeTweetBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25),
+            composeTweetBtn.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -120),
+            composeTweetBtn.widthAnchor.constraint(equalToConstant: 60),
+            composeTweetBtn.heightAnchor.constraint(equalToConstant: 60)
+        ]
+        
+        // activate constraints
+        NSLayoutConstraint.activate(composeTweetBtnConstraints)
+    }
+    
     
     //MARK: - Handle auth
     private func handleAuth() {
@@ -92,6 +113,13 @@ class HomeVC: UIViewController {
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: false)
         }
+    }
+    
+    //MARK: - Navigate to tweet
+    private func didTapTweet() {
+        let vc = UINavigationController(rootViewController: TweetComposeVC())
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
     
     //MARK: - Configure NavBar
