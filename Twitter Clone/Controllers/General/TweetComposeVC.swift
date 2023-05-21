@@ -68,7 +68,6 @@ class TweetComposeVC: UIViewController {
     }
     
     
-    
     //MARK: - Bind views
     private func bindViews() {
         viewModel.$isValidToTweet.sink { [weak self] validationState in
