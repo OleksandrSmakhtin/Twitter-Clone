@@ -66,7 +66,7 @@ class TweetComposeVC: UIViewController {
         super.viewWillAppear(animated)
         viewModel.getUserData()
     }
-    
+  
     
     //MARK: - Bind views
     private func bindViews() {
