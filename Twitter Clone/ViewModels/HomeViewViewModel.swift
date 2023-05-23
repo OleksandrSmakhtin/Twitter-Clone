@@ -36,14 +36,25 @@ final class HomeViewViewModel: ObservableObject {
     }
     
     func fetchTweets() {
-        guard let id = user?.id else { return }
-        DatabaseManager.shared.collectionTweets(retreiveTweets: id).sink { [weak self] completion in
+//        guard let id = user?.id else { return }
+//        DatabaseManager.shared.collectionTweets(retreiveTweets: id).sink { [weak self] completion in
+//            if case .failure(let error) = completion {
+//                self?.error = error.localizedDescription
+//            }
+//        } receiveValue: { [weak self] retreivedTweets in
+//            self?.tweets = retreivedTweets
+//        }.store(in: &subscriptions)
+        
+        
+        DatabaseManager.shared.collectionTweets().sink { [weak self] completion in
             if case .failure(let error) = completion {
                 self?.error = error.localizedDescription
             }
-        } receiveValue: { [weak self] retreivedTweets in
-            self?.tweets = retreivedTweets
+        } receiveValue: { [weak self] tweets in
+            self?.tweets = tweets
         }.store(in: &subscriptions)
+
+        
 
     }
     

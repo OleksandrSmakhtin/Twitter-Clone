@@ -79,6 +79,12 @@ class ProfileVC: UIViewController {
             self?.headerView.joinedDateLbl.text = self?.viewModel.getFormattedData(with: user.createdOn)
             
         }.store(in: &subscriptions)
+        
+        viewModel.$tweets.sink { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.profileTable.reloadData()
+            }
+        }.store(in: &subscriptions)
     }
     
     //MARK: - configure profile Table
@@ -134,11 +140,17 @@ extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return viewModel.tweets.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TweetCell.identifier) as? TweetCell else { return UITableViewCell()}
+        
+        let tweetModel = viewModel.tweets[indexPath.row]
+        
+        cell.configure(displayName: tweetModel.author.displayName, username: tweetModel.author.username, tweetContent: tweetModel.tweetContent, avatarPath: tweetModel.author.avatarPath)
+        
+        
         return cell
         
     }
