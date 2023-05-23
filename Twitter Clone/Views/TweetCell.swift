@@ -45,7 +45,6 @@ class TweetCell: UITableViewCell {
     
     private let displayNameLbl: UILabel = {
         let label = UILabel()
-        label.text = "My name"
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -53,7 +52,6 @@ class TweetCell: UITableViewCell {
     
     private let usernameLbl: UILabel = {
         let label = UILabel()
-        label.text = "@Sir"
         label.textColor = .secondaryLabel
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -63,7 +61,6 @@ class TweetCell: UITableViewCell {
     private let tweetTextContenLbl: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.text = "This is my Mockup tweet, and it is going to take as many lines as possible. I believe some more text is enpught but let's add some more anyway... Bruh!"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -108,6 +105,16 @@ class TweetCell: UITableViewCell {
         likeBtn.addTarget(self, action: #selector(likeAction), for: .touchUpInside)
         shareBtn.addTarget(self, action: #selector(shareAction), for: .touchUpInside)
     }
+    
+    
+    //MARK: - Configure cell
+    public func configure(displayName: String, username: String, tweetContent: String, avatarPath: String) {
+        displayNameLbl.text = displayName
+        usernameLbl.text = "@ \(username)"
+        tweetTextContenLbl.text = tweetContent
+        avatarImageView.sd_setImage(with: URL(string: avatarPath))
+    }
+    
     
     //MARK: - Btns' Actions
     @objc private func replyAction() {

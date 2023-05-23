@@ -67,6 +67,12 @@ class HomeVC: UIViewController {
                 self?.completeUserOnboarding()
             }
         }.store(in: &subscriptions)
+        
+        viewModel.$tweets.sink { [weak self] tweets in
+            DispatchQueue.main.async { 
+                self?.timeLineTable.reloadData()
+            }
+        }.store(in: &subscriptions)
     }
     
     //MARK: - Complete user onborading
@@ -164,12 +170,16 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return viewModel.tweets.count
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TweetCell.identifier) as? TweetCell else { return UITableViewCell()}
+        
+        let tweetModel = viewModel.tweets[indexPath.row]
+        
+        cell.configure(displayName: tweetModel.author.displayName, username: tweetModel.author.username, tweetContent: tweetModel.tweetContent, avatarPath: tweetModel.author.avatarPath)
         
         // apply delegate
         cell.delegate = self
