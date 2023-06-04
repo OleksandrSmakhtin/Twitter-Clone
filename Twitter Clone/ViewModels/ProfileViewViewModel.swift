@@ -23,7 +23,7 @@ final class ProfileViewViewModel: ObservableObject {
             .handleEvents(receiveOutput: { [weak self] user in
                 self?.user = user
                 self?.fetchTweets()
-            })
+            }) 
             .sink { [weak self] completion in
             if case .failure(let error) = completion {
                 self?.error = error.localizedDescription
